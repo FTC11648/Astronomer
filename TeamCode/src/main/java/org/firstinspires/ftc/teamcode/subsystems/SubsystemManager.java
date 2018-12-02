@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 public class SubsystemManager {
-  Subsystem subSystems;
+  Subsystem[] subSystems;
   public SubsytemManager(Subsystem ...subSystems) {
     this.subSystems = subSystems;
   }
