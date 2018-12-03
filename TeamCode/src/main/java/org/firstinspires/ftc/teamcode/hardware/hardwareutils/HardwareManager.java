@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.hardware.hardwareutils;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -24,7 +25,7 @@ public class HardwareManager {
     public LinearActuator rightActuator;
 
     //Latching Mechanism Servo
-    public Servo latch;
+    public CRServo latch;
 
     public HardwareManager(HardwareMap hardwareMap)
     {
@@ -49,6 +50,6 @@ public class HardwareManager {
     }
     private void initLatchingMechanism()
     {
-//        latch = hardwareMap.get(Servo.class, HardwareNames.latchingServo);
+//        latch = hardwareMap.get(CRServo.class, HardwareNames.latchingServo);
     }
 }
