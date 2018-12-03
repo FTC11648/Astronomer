@@ -1,8 +1,10 @@
-package org.firstinspires.ftc.teamcode.hardware;
+package org.firstinspires.ftc.teamcode.hardware.hardwareutils;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.teamcode.hardware.LinearActuator;
 
 /**
  * Contains all pieces of Hardware used on Robot
@@ -27,6 +29,9 @@ public class HardwareManager {
     public HardwareManager(HardwareMap hardwareMap)
     {
         this.hardwareMap = hardwareMap;
+        initDrivetrain();
+        initElevator();
+        initLatchingMechanism();
     }
 
     private void initDrivetrain()
@@ -39,11 +44,11 @@ public class HardwareManager {
 
     private void initElevator()
     {
-        leftActuator = new LinearActuator(hardwareMap.get(DcMotor.class, HardwareNames.leftElevatorActuator));
-        rightActuator = new LinearActuator(hardwareMap.get(DcMotor.class, HardwareNames.rightElevatorActuator));
+//        leftActuator = new LinearActuator(hardwareMap.get(DcMotor.class, HardwareNames.leftElevatorActuator));
+//        rightActuator = new LinearActuator(hardwareMap.get(DcMotor.class, HardwareNames.rightElevatorActuator));
     }
     private void initLatchingMechanism()
     {
-        latch = hardwareMap.get(Servo.class, HardwareNames.latchingServo);
+//        latch = hardwareMap.get(Servo.class, HardwareNames.latchingServo);
     }
 }
