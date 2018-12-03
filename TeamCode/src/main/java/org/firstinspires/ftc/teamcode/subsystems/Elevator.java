@@ -2,19 +2,17 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import org.firstinspires.ftc.teamcode.hardware.LinearActuator;
 import org.firstinspires.ftc.teamcode.hardware.controls.GamepadWrapper;
+import org.firstinspires.ftc.teamcode.subsystems.subsystemutils.Subsystem;
 
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.DcMotor;
-
-public class Elevator implements Subsystem{
-  private LinearActuator actuator1;
-  private LinearActuator actuator2;
+public class Elevator implements Subsystem {
+  private LinearActuator left;
+  private LinearActuator right;
   private GamepadWrapper manipController;
 
-  public Elevator(GamepadWrapper manipController, LinearActuator actuator1, LinearActuator actuator2) {
+  public Elevator(GamepadWrapper manipController, LinearActuator left, LinearActuator right) {
     this.manipController = manipController;
-    this.actuator1 = actuator1;
-    this.actuator2 = actuator2;
+    this.left = left;
+    this.right = right;
   }
   @Override
   public void init()
@@ -24,7 +22,7 @@ public class Elevator implements Subsystem{
   @Override
   public void update() {
     double leftStickY = manipController.getLeftStickY();
-    actuator1.setVolt(leftStickY);
-    actuator2.setVolt(leftStickY);
+    left.setVolt(leftStickY);
+    right.setVolt(leftStickY);
   }
 }
