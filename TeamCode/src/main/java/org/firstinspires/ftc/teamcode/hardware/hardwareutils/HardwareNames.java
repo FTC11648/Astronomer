@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.hardware.hardwareutils;
 
+/**
+ * Contains all hardware device names, which directly correlate with names of devices in the Hardware config file on the RobotController.
+ */
 public class HardwareNames {
 
     //drive train motor names

@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.hardware.LinearActuator;
 
 /**
- * Contains all pieces of Hardware used on Robot
+ * Contains all pieces of Hardware used on Robot. Only declare & initialize Hardware here.
  */
 public class HardwareManager {
 
