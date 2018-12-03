@@ -4,6 +4,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class LinearActuator {
   private DcMotor act;
   private boolean inverted;
+  public LinearActuator(DcMotor act)
+  {
+    this(act, false);
+  }
   public LinearActuator(DcMotor act, boolean inverted) {
     this.act = act;
     this.inverted = inverted;
