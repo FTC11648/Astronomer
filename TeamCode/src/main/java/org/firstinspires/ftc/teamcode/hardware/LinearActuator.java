@@ -9,8 +9,11 @@ public class LinearActuator {
     this.act = act;
   }
 
-  public void setVolt(double vltg) {
-
+  public void setVolt(double vltg, boolean inverted) {
+    if (!inverted) {
       act.setPower(vltg);
+    } else {
+      act.setPower(-vltg);
+    }
   }
 }
