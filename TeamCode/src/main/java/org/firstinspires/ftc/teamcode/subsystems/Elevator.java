@@ -2,11 +2,9 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import org.firstinspires.ftc.teamcode.hardware.LinearActuator;
 import org.firstinspires.ftc.teamcode.hardware.controls.GamepadWrapper;
+import org.firstinspires.ftc.teamcode.subsystems.subsystemutils.Subsystem;
 
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.DcMotor;
-
-public class Elevator implements Subsystem{
+public class Elevator implements Subsystem {
   private LinearActuator actuator1;
   private LinearActuator actuator2;
   private GamepadWrapper manipController;

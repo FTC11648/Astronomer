@@ -1,8 +1,10 @@
-package org.firstinspires.ftc.teamcode.subsystems;
+package org.firstinspires.ftc.teamcode.subsystems.subsystemutils;
+
+import org.firstinspires.ftc.teamcode.subsystems.subsystemutils.Subsystem;
 
 public class SubsystemManager {
   Subsystem[] subSystems;
-  public SubsytemManager(Subsystem ...subSystems) {
+  public SubsystemManager(Subsystem ...subSystems) {
     this.subSystems = subSystems;
   }
 
