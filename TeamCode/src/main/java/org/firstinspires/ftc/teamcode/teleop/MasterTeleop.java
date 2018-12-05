@@ -7,15 +7,15 @@ import org.firstinspires.ftc.teamcode.hardware.controls.GamepadWrapper;
 import org.firstinspires.ftc.teamcode.hardware.hardwareutils.HardwareManager;
 import org.firstinspires.ftc.teamcode.subsystems.TwinstickMecanum;
 import org.firstinspires.ftc.teamcode.subsystems.subsystemutils.Subsystem;
+import org.firstinspires.ftc.teamcode.subsystems.Elevator;
 import org.firstinspires.ftc.teamcode.subsystems.subsystemutils.SubsystemManager;
 
 @TeleOp
 public class MasterTeleop extends OpMode {
     HardwareManager hardware;
 
-
     GamepadWrapper driveController; //gamepad 1;
-    GamepadWrapper manipController;//gamepad 2;
+    GamepadWrapper manipController; //gamepad 2;
 
     SubsystemManager subsystems;
     @Override
@@ -27,14 +27,13 @@ public class MasterTeleop extends OpMode {
         Subsystem drivesystem = setUpDriveTrain();
         subsystems = new SubsystemManager(drivesystem);
     }
-
+    private Elevator setup() {
+      Elevator elevator = new Elevator(manipController, hardware.leftActuator, hardware.rightActuator);
+      return elevator;
+    }
     @Override
     public void loop() {
-        hardware.leftFrontDrive.setPower(1);
-//        hardware.leftRearDrive.setPower(1);
-//        hardware.rightFrontDrive.setPower(1);
-//        hardware.rightRearDrive.setPower(1);
-
+      subsystems.update();
     }
     private Subsystem setUpDriveTrain()
     {
