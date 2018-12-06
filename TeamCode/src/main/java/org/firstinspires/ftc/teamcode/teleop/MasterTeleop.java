@@ -24,10 +24,11 @@ public class MasterTeleop extends OpMode {
         driveController = new GamepadWrapper(gamepad1);
         manipController = new GamepadWrapper(gamepad2);
 
-        Subsystem drivesystem = setUpDriveTrain();
-        subsystems = new SubsystemManager(drivesystem);
+        Subsystem drive = setUpDriveTrain();
+        Subsystem elevator = setUpElevator();
+        subsystems = new SubsystemManager(drive, elevator);
     }
-    private Elevator setup() {
+    private Elevator setUpElevator() {
       Elevator elevator = new Elevator(manipController, hardware.leftActuator, hardware.rightActuator);
       return elevator;
     }
