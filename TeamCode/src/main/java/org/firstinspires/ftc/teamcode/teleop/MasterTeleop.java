@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.hardware.controls.GamepadWrapper;
 import org.firstinspires.ftc.teamcode.hardware.hardwareutils.HardwareManager;
+import org.firstinspires.ftc.teamcode.subsystems.Latch;
 import org.firstinspires.ftc.teamcode.subsystems.TwinstickMecanum;
 import org.firstinspires.ftc.teamcode.subsystems.subsystemutils.Subsystem;
 import org.firstinspires.ftc.teamcode.subsystems.Elevator;
@@ -20,21 +21,29 @@ public class MasterTeleop extends OpMode {
     SubsystemManager subsystems;
     @Override
     public void init() {
+        //verify switch on bottom is in X pos
+        //for drive controller, do Start btn + A btn
+        //for manip controller, do Start btn + B btn
         hardware = new HardwareManager(hardwareMap);
         driveController = new GamepadWrapper(gamepad1);
         manipController = new GamepadWrapper(gamepad2);
 
+
         Subsystem drive = setUpDriveTrain();
-        Subsystem elevator = setUpElevator();
-        subsystems = new SubsystemManager(drive, elevator);
-    }
-    private Elevator setUpElevator() {
-      Elevator elevator = new Elevator(manipController, hardware.leftActuator, hardware.rightActuator);
-      return elevator;
+        //TODO: add in the other systems
+        subsystems = new SubsystemManager(drive);
     }
     @Override
     public void loop() {
-      subsystems.update();
+        subsystems.update();
+    }
+
+    private Subsystem setUpElevator() {
+      return new Elevator(manipController, hardware.leftActuator, hardware.rightActuator);
+    }
+    private Subsystem setUpLatch()
+    {
+        return new Latch(manipController, hardware.latch);
     }
     private Subsystem setUpDriveTrain()
     {

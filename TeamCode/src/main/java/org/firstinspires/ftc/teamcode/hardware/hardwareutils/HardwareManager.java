@@ -45,6 +45,7 @@ public class HardwareManager {
         rightFrontDrive = hardwareMap.get(DcMotor.class, HardwareNames.rightFrontDriveMotor);
         rightFrontDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightRearDrive = hardwareMap.get(DcMotor.class, HardwareNames.rightRearDriveMotor);
+        rightRearDrive.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     private void initElevator()
@@ -54,6 +55,6 @@ public class HardwareManager {
     }
     private void initLatchingMechanism()
     {
-//        latch = hardwareMap.get(CRServo.class, HardwareNames.latchingServo);
+        latch = hardwareMap.get(CRServo.class, HardwareNames.latchingServo);
     }
 }
