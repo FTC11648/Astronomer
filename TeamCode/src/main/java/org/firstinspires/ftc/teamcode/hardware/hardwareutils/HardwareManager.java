@@ -50,8 +50,9 @@ public class HardwareManager {
 
     private void initElevator()
     {
-        leftActuator = new LinearActuator(hardwareMap.get(DcMotor.class, HardwareNames.leftElevatorActuator));
-        rightActuator = new LinearActuator(hardwareMap.get(DcMotor.class, HardwareNames.rightElevatorActuator));
+        leftActuator = new LinearActuator(hardwareMap.get(DcMotor.class, HardwareNames.leftElevatorActuator), true);
+
+        rightActuator = new LinearActuator(hardwareMap.get(DcMotor.class, HardwareNames.rightElevatorActuator), true);
     }
     private void initLatchingMechanism()
     {
