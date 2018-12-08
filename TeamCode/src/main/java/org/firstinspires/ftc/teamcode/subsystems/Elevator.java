@@ -4,6 +4,9 @@ import org.firstinspires.ftc.teamcode.hardware.LinearActuator;
 import org.firstinspires.ftc.teamcode.hardware.controls.GamepadWrapper;
 import org.firstinspires.ftc.teamcode.subsystems.subsystemutils.Subsystem;
 
+/**
+ * assumes that up means extend, down means retract
+ */
 public class Elevator implements Subsystem {
   private LinearActuator left;
   private LinearActuator right;

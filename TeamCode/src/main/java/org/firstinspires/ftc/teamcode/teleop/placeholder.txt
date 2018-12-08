@@ -1,1 +1,0 @@
-I just put this in so git will recognize the empty directories. Delete them as you add legitimate files into the directory.
