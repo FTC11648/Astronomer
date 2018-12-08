@@ -30,12 +30,14 @@ public class MasterTeleop extends OpMode {
 
 
         Subsystem drive = setUpDriveTrain();
-        //TODO: add in the other systems
-        subsystems = new SubsystemManager(drive);
+        Subsystem latch = setUpLatch();
+        Subsystem elevator = setUpElevator();
+        subsystems = new SubsystemManager(drive, latch, elevator);
     }
     @Override
     public void loop() {
         subsystems.update();
+
     }
 
     private Subsystem setUpElevator() {
