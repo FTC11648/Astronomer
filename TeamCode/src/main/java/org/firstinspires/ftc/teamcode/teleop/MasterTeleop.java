@@ -20,6 +20,12 @@ public class MasterTeleop extends OpMode {
 
     SubsystemManager subsystems;
     @Override
+    public void init_loop() {
+        // If you are using Motorola E4 phones,
+        // you should send telemetry data while waiting for start.
+        telemetry.addData("status", "loop test... waiting for start");
+    }
+    @Override
     public void init() {
         //verify switch on bottom is in X pos
         //for drive controller, do Start btn + A btn
@@ -45,10 +51,10 @@ public class MasterTeleop extends OpMode {
     }
     private Subsystem setUpLatch()
     {
-        return new Latch(manipController, hardware.latch);
+        return new Latch(manipController, telemetry, hardware.latch);
     }
     private Subsystem setUpDriveTrain()
     {
-        return new TwinstickMecanum(driveController, hardware.leftFrontDrive, hardware.rightFrontDrive, hardware.leftRearDrive, hardware.rightRearDrive);
+        return new TwinstickMecanum(driveController, hardware.leftFrontDrive, hardware.rightFrontDrive, hardware.rightRearDrive, hardware.leftRearDrive);
     }
 }

@@ -43,9 +43,7 @@ public class HardwareManager {
 
 
         rightFrontDrive = hardwareMap.get(DcMotor.class, HardwareNames.rightFrontDriveMotor);
-        rightFrontDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightRearDrive = hardwareMap.get(DcMotor.class, HardwareNames.rightRearDriveMotor);
-        rightRearDrive.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     private void initElevator()
