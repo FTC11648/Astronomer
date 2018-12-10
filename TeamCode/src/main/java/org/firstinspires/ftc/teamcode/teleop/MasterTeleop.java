@@ -51,7 +51,7 @@ public class MasterTeleop extends OpMode {
     }
     private Subsystem setUpLatch()
     {
-        return new Latch(manipController, telemetry, hardware.latch);
+        return new Latch(manipController, hardware.latch);
     }
     private Subsystem setUpDriveTrain()
     {
