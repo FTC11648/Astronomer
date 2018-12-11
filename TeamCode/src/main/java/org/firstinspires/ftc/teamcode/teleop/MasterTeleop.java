@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.hardware.controls.GamepadWrapper;
 import org.firstinspires.ftc.teamcode.hardware.hardwareutils.HardwareManager;
+import org.firstinspires.ftc.teamcode.subsystems.Latch;
 import org.firstinspires.ftc.teamcode.subsystems.TwinstickMecanum;
 import org.firstinspires.ftc.teamcode.subsystems.subsystemutils.Subsystem;
 import org.firstinspires.ftc.teamcode.subsystems.Elevator;
@@ -19,24 +20,41 @@ public class MasterTeleop extends OpMode {
 
     SubsystemManager subsystems;
     @Override
+    public void init_loop() {
+        // If you are using Motorola E4 phones,
+        // you should send telemetry data while waiting for start.
+        telemetry.addData("status", "loop test... waiting for start");
+    }
+    @Override
     public void init() {
+        //verify switch on bottom is in X pos
+        //for drive controller, do Start btn + A btn
+        //for manip controller, do Start btn + B btn
         hardware = new HardwareManager(hardwareMap);
         driveController = new GamepadWrapper(gamepad1);
         manipController = new GamepadWrapper(gamepad2);
 
-        Subsystem drivesystem = setUpDriveTrain();
-        subsystems = new SubsystemManager(drivesystem);
-    }
-    private Elevator setup() {
-      Elevator elevator = new Elevator(manipController, hardware.leftActuator, hardware.rightActuator);
-      return elevator;
+
+        Subsystem drive = setUpDriveTrain();
+        Subsystem latch = setUpLatch();
+        Subsystem elevator = setUpElevator();
+        subsystems = new SubsystemManager(drive, latch, elevator);
     }
     @Override
     public void loop() {
-      subsystems.update();
+        subsystems.update();
+
+    }
+
+    private Subsystem setUpElevator() {
+      return new Elevator(manipController, hardware.leftActuator, hardware.rightActuator);
+    }
+    private Subsystem setUpLatch()
+    {
+        return new Latch(manipController, telemetry, hardware.latch);
     }
     private Subsystem setUpDriveTrain()
     {
-        return new TwinstickMecanum(driveController, hardware.leftFrontDrive, hardware.rightFrontDrive, hardware.leftRearDrive, hardware.rightRearDrive);
+        return new TwinstickMecanum(driveController, hardware.leftFrontDrive, hardware.rightFrontDrive, hardware.rightRearDrive, hardware.leftRearDrive);
     }
 }

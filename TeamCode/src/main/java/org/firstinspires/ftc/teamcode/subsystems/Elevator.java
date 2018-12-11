@@ -4,6 +4,9 @@ import org.firstinspires.ftc.teamcode.hardware.LinearActuator;
 import org.firstinspires.ftc.teamcode.hardware.controls.GamepadWrapper;
 import org.firstinspires.ftc.teamcode.subsystems.subsystemutils.Subsystem;
 
+/**
+ * assumes that up means extend, down means retract
+ */
 public class Elevator implements Subsystem {
   private LinearActuator left;
   private LinearActuator right;
@@ -22,7 +25,19 @@ public class Elevator implements Subsystem {
   @Override
   public void update() {
     double leftStickY = manipController.getLeftStickY();
-    left.setVolt(leftStickY);
-    right.setVolt(leftStickY);
-  }
+    if(leftStickY > 0) {
+      left.setVolt(1);
+      right.setVolt(1);
+    }
+    else if (leftStickY < 0)
+    {
+      left.setVolt(-1);
+      right.setVolt(-1);
+    }
+    else
+    {
+      left.setVolt(0);
+      right.setVolt(0);
+    }
+    }
 }

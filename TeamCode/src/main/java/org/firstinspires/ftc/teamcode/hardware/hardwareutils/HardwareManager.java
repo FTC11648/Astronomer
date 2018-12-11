@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.hardware.hardwareutils;
 
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -38,18 +39,22 @@ public class HardwareManager {
     private void initDrivetrain()
     {
         leftFrontDrive = hardwareMap.get(DcMotor.class, HardwareNames.leftFrontDriveMotor);
-        rightFrontDrive = hardwareMap.get(DcMotor.class, HardwareNames.rightFrontDriveMotor);
         leftRearDrive = hardwareMap.get(DcMotor.class, HardwareNames.leftRearDriveMotor);
+
+
+        rightFrontDrive = hardwareMap.get(DcMotor.class, HardwareNames.rightFrontDriveMotor);
         rightRearDrive = hardwareMap.get(DcMotor.class, HardwareNames.rightRearDriveMotor);
     }
 
     private void initElevator()
     {
-        leftActuator = new LinearActuator(hardwareMap.get(DcMotor.class, HardwareNames.leftElevatorActuator));
-        rightActuator = new LinearActuator(hardwareMap.get(DcMotor.class, HardwareNames.rightElevatorActuator));
+        double leftActuatorScaleFactor = .97;
+        leftActuator = new LinearActuator(hardwareMap.get(DcMotor.class, HardwareNames.leftElevatorActuator), false);
+        leftActuator.scale(leftActuatorScaleFactor);
+        rightActuator = new LinearActuator(hardwareMap.get(DcMotor.class, HardwareNames.rightElevatorActuator), false);
     }
     private void initLatchingMechanism()
     {
-//        latch = hardwareMap.get(CRServo.class, HardwareNames.latchingServo);
+        latch = hardwareMap.get(CRServo.class, HardwareNames.latchingServo);
     }
 }
