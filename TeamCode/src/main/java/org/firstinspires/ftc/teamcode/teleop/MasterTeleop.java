@@ -55,6 +55,6 @@ public class MasterTeleop extends OpMode {
     }
     private Subsystem setUpDriveTrain()
     {
-        return new TwinstickMecanum(driveController, hardware.leftFrontDrive, hardware.rightFrontDrive, hardware.rightRearDrive, hardware.leftRearDrive);
+        return new TwinstickMecanum(driveController, hardware.leftFrontDrive, hardware.rightFrontDrive, hardware.leftRearDrive, hardware.rightRearDrive);
     }
 }
