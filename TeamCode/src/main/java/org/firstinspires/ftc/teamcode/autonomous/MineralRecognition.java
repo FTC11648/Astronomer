@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.vision;
+package org.firstinspires.ftc.teamcode.autonomous;
 
 // import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -13,24 +13,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 @Autonomous(name = "Concept: TensorFlow Object Detection", group = "Concept")
 // @Disabled
 public class ConceptTensorFlowObjectDetection extends LinearOpMode {
-    private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
-    private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
-    private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
-
-    /*
-     * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
-     * 'parameters.vuforiaLicenseKey' is initialized is for illustration only, and will not function.
-     * A Vuforia 'Development' license key, can be obtained free of charge from the Vuforia developer
-     * web site at https://developer.vuforia.com/license-manager.
-     *
-     * Vuforia license keys are always 380 characters long, and look as if they contain mostly
-     * random data. As an example, here is a example of a fragment of a valid key:
-     *      ... yIgIzTqZ4mWjk9wd3cZO9T1axEqzuhxoGlfOOI2dRzKS4T0hQ8kT ...
-     * Once you've obtained a license key, copy the string from the Vuforia web site
-     * and paste it in to your code on the next line, between the double quotes.
-     */
-    private static final String VUFORIA_KEY = "AacLujT/////AAABmS7ZHrm/OkNvsn4Z98mWAUQmSsRPUICUNDt9srv+zJ9llRzSt/P8N/a38KzbSGoqrNc4Vyzcv7J+QbG8V8oA9o/XRonSBeRXUqeiYHWUgVNMiQmIXqfAxyX/ckQXz0mXCpFyIAbLxEq0DtgS5aedNHvIHb2f02DYD2VtVJ/WwLcVe2fDCB8q9BuhlokYJ0TtVTegwLII2owK3jSYLnRjDylzPj3pigeSRAkSfvTjAINHcopponz6rWEkbxfiTYROK1rL/GbpufAD4MAySJ32adtP9TytOWBly6Lo+mOcfINioOOA3FCdJgggk9+GcGiFTEPiwAnlfkWz9uIi40ZqkJBLR3+xBflvm6jOJDD+td95\\n";
-
+    private MineralConstants constants = new MineralConstants();
     /**
      * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
      * localization engine.
@@ -55,7 +38,6 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
             telemetry.addData("Sorry!", "This device is not compatible with TFOD");
         }
 
-        /** Wait for the game to begin */
         telemetry.addData(">", "Press Play to start tracking");
         telemetry.update();
         waitForStart();
@@ -78,7 +60,7 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
                         int silverMineral1X = -1;
                         int silverMineral2X = -1;
                         for (Recognition recognition : updatedRecognitions) {
-                          if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
+                          if (recognition.getLabel().equals(constants.LABEL_GOLD_MINERAL)) {
                             goldMineralX = (int) recognition.getLeft();
                           } else if (silverMineral1X == -1) {
                             silverMineral1X = (int) recognition.getLeft();
@@ -116,7 +98,7 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
          */
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
-        parameters.vuforiaLicenseKey = VUFORIA_KEY;
+        parameters.vuforiaLicenseKey = constants.VUFORIA_KEY;
         parameters.cameraDirection = CameraDirection.BACK;
 
         //  Instantiate the Vuforia engine
@@ -133,6 +115,6 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
             "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
-        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_GOLD_MINERAL, LABEL_SILVER_MINERAL);
+        tfod.loadModelFromAsset(constants.TFOD_MODEL_ASSET, constants.LABEL_GOLD_MINERAL, constants.LABEL_SILVER_MINERAL);
     }
 }
