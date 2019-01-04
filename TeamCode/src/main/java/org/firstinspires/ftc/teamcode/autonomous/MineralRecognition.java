@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
 @Autonomous(name = "Concept: TensorFlow Object Detection", group = "Concept")
 // @Disabled
-public class ConceptTensorFlowObjectDetection extends LinearOpMode {
+public class MineralRecognition extends LinearOpMode {
     private MineralConstants constants = new MineralConstants();
     /**
      * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
