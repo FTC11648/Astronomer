@@ -10,10 +10,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Came
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
-@Autonomous(name = "Concept: TensorFlow Object Detection", group = "Concept")
+@Autonomous
 // @Disabled
 public class MineralRecognition extends LinearOpMode {
-    private MineralConstants constants = new MineralConstants();
     /**
      * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
      * localization engine.
@@ -54,36 +53,42 @@ public class MineralRecognition extends LinearOpMode {
                     // the last time that call was made.
                     List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
                     if (updatedRecognitions != null) {
-                      telemetry.addData("# Object Detected", updatedRecognitions.size());
-                      if (updatedRecognitions.size() == 3) {
-                        int goldMineralX = -1;
-                        int silverMineral1X = -1;
-                        int silverMineral2X = -1;
-                        for (Recognition recognition : updatedRecognitions) {
-                          if (recognition.getLabel().equals(constants.LABEL_GOLD_MINERAL)) {
-                            goldMineralX = (int) recognition.getLeft();
-                          } else if (silverMineral1X == -1) {
-                            silverMineral1X = (int) recognition.getLeft();
-                          } else {
-                            silverMineral2X = (int) recognition.getLeft();
-                          }
+                        telemetry.addData("# Object Detected", updatedRecognitions.size());
+                        if (updatedRecognitions.size() == 3) {
+                            int goldMineralX = -1;
+//                        int silverMineral1X = -1;
+//                        int silverMineral2X = -1;
+                            Recognition imageCenterCalc = updatedRecognitions.get(0);
+                            int centerX = imageCenterCalc.getImageWidth() / 2;
+                            for (Recognition recognition : updatedRecognitions) {
+                                if (recognition.getLabel().equals(MineralConstants.LABEL_GOLD_MINERAL)) {
+                                    goldMineralX = (int) recognition.getWidth() / 2;
+
+//                         else if (silverMineral1X == -1) {
+//                            silverMineral1X = (int) recognition.getLeft();
+//                          } else {
+//                            silverMineral2X = (int) recognition.getLeft();
+//                          }
+                                }
+//                        if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
+//                          if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
+//                            telemetry.addData("Gold Mineral Position", "Left");
+//                          } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
+//                            telemetry.addData("Gold Mineral Position", "Right");
+//                          } else {
+//                            telemetry.addData("Gold Mineral Position", "Center");
+//                          }
+//                        }
+                            }
+                            int error = centerX - goldMineralX;
+                            telemetry.addData("Error", error);
+                            telemetry.addData("Gold Mineral X", goldMineralX);
+                            telemetry.update();
                         }
-                        if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
-                          if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
-                            telemetry.addData("Gold Mineral Position", "Left");
-                          } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
-                            telemetry.addData("Gold Mineral Position", "Right");
-                          } else {
-                            telemetry.addData("Gold Mineral Position", "Center");
-                          }
-                        }
-                      }
-                      telemetry.update();
                     }
                 }
             }
         }
-
         if (tfod != null) {
             tfod.shutdown();
         }
@@ -98,7 +103,7 @@ public class MineralRecognition extends LinearOpMode {
          */
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
-        parameters.vuforiaLicenseKey = constants.VUFORIA_KEY;
+        parameters.vuforiaLicenseKey = MineralConstants.VUFORIA_KEY;
         parameters.cameraDirection = CameraDirection.BACK;
 
         //  Instantiate the Vuforia engine
@@ -115,6 +120,6 @@ public class MineralRecognition extends LinearOpMode {
             "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
-        tfod.loadModelFromAsset(constants.TFOD_MODEL_ASSET, constants.LABEL_GOLD_MINERAL, constants.LABEL_SILVER_MINERAL);
+        tfod.loadModelFromAsset(MineralConstants.TFOD_MODEL_ASSET, MineralConstants.LABEL_GOLD_MINERAL, MineralConstants.LABEL_SILVER_MINERAL);
     }
 }
