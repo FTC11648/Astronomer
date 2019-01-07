@@ -27,8 +27,6 @@ public class MineralRecognition extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
-        // first.
         initVuforia();
 
         if (ClassFactory.getInstance().canCreateTFObjectDetector()) {
@@ -54,35 +52,36 @@ public class MineralRecognition extends LinearOpMode {
                     List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
                     if (updatedRecognitions != null) {
                         telemetry.addData("# Object Detected", updatedRecognitions.size());
-                        if (updatedRecognitions.size() == 3) {
+                        if (updatedRecognitions.size() != 0) {
                             int goldMineralX = -1;
-//                        int silverMineral1X = -1;
-//                        int silverMineral2X = -1;
+                            int silverMineral1X = -1;
+                            int silverMineral2X = -1;
                             Recognition imageCenterCalc = updatedRecognitions.get(0);
                             int centerX = imageCenterCalc.getImageWidth() / 2;
+                            int goldMineralCenterX = 0;
                             for (Recognition recognition : updatedRecognitions) {
                                 if (recognition.getLabel().equals(MineralConstants.LABEL_GOLD_MINERAL)) {
-                                    goldMineralX = (int) recognition.getWidth() / 2;
-
-//                         else if (silverMineral1X == -1) {
-//                            silverMineral1X = (int) recognition.getLeft();
-//                          } else {
-//                            silverMineral2X = (int) recognition.getLeft();
-//                          }
-                                }
-//                        if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
-//                          if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
-//                            telemetry.addData("Gold Mineral Position", "Left");
-//                          } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
-//                            telemetry.addData("Gold Mineral Position", "Right");
-//                          } else {
-//                            telemetry.addData("Gold Mineral Position", "Center");
-//                          }
-//                        }
+                                    goldMineralCenterX = (int) (recognition.getLeft() + recognition.getRight())/2;
+                                    goldMineralX = (int) recognition.getLeft();
+                                } else if (silverMineral1X == -1) {
+                            silverMineral1X = (int) recognition.getLeft();
+                            } else {
+                            silverMineral2X = (int) recognition.getLeft();
                             }
-                            int error = centerX - goldMineralX;
+//                            if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
+//                              if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
+//                                telemetry.addData("Gold Mineral Position", "Left");
+//                              } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
+//                                telemetry.addData("Gold Mineral Position", "Right");
+//                              } else {
+//                                telemetry.addData("Gold Mineral Position", "Center");
+//                              }
+//                            }
+                        }
+                            int error = centerX - goldMineralCenterX;
+                            telemetry.addData("Center", centerX);
                             telemetry.addData("Error", error);
-                            telemetry.addData("Gold Mineral X", goldMineralX);
+                            telemetry.addData("Gold Mineral X", goldMineralCenterX);
                             telemetry.update();
                         }
                     }
