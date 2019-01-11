@@ -51,10 +51,10 @@ public class MasterTeleop extends OpMode {
     }
     private Subsystem setUpLatch()
     {
-        return new Latch(manipController, telemetry, hardware.latch);
+        return new Latch(manipController, hardware.latch);
     }
     private Subsystem setUpDriveTrain()
     {
-        return new TwinstickMecanum(driveController, hardware.leftFrontDrive, hardware.rightFrontDrive, hardware.rightRearDrive, hardware.leftRearDrive);
+        return new TwinstickMecanum(driveController, hardware.leftFrontDrive, hardware.rightFrontDrive, hardware.leftRearDrive, hardware.rightRearDrive);
     }
 }
