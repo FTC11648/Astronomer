@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.hardware.LinearActuator;
 /**
  * Contains all pieces of Hardware used on Robot. Only declare & initialize Hardware here.
  */
-public class HardwareManager {
+public class  HardwareManager {
 
     HardwareMap hardwareMap;
 
