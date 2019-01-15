@@ -104,11 +104,15 @@ public class MineralRecognition extends LinearOpMode {
                                 Log.i(loggingName, "Gold Mineral X not detected");
                                 telemetry.addData("Gold Mineral X", "not detected");
                             }
+
                             else {
                                 telemetry.addData("Center", centerX);
-                                telemetry.addData("Error", error);
-                                telemetry.addData("Gold Mineral X", goldMineralCenterX);
+                                Log.i(loggingName, "CenterX is " + centerX);
+                                telemetry.addData("Error + ", error);
+                                Log.i(loggingName, "Error + "  + error);
+                                Log.i(loggingName, "Gold Mineral X + "  + goldMineralCenterX);
                             }
+
                             pidLoop(error);
                             telemetry.update();
 
