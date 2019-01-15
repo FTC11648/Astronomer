@@ -101,6 +101,7 @@ public class MineralRecognition extends LinearOpMode {
                             if(goldMineralCenterX == TARGET_NOT_DETECTED)
                             {
                                 pidLoop(0);
+                                Log.i(loggingName, "Gold Mineral X not detected");
                                 telemetry.addData("Gold Mineral X", "not detected");
                             }
                             else {
@@ -108,7 +109,7 @@ public class MineralRecognition extends LinearOpMode {
                                 telemetry.addData("Error", error);
                                 telemetry.addData("Gold Mineral X", goldMineralCenterX);
                             }
-//                            pidLoop(error);
+                            pidLoop(error);
                             telemetry.update();
 
                         }
@@ -152,12 +153,12 @@ public class MineralRecognition extends LinearOpMode {
 
     //may need to scale this down so it stops losing track
     private void pidLoop(int error) {
-        double kp = 0.002;
+        double kp = -0.002;
         double sideShiftPower = error * kp;
         telemetry.addData("Power", sideShiftPower);
         telemetry.update();
         Log.i(loggingName, "Power for pid is " + sideShiftPower);
         Log.i(loggingName, "Error for pid is " + error);
-//        commands.HorizontalMove(sideShiftPower);
+        commands.HorizontalMove(sideShiftPower);
     }
 }
