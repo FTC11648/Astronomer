@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode.autonomous;
 
 // import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import android.util.Log;
 import android.widget.HorizontalScrollView;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.vuforia.CameraDevice;
+
 import java.util.List;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
@@ -18,6 +21,7 @@ import org.firstinspires.ftc.teamcode.hardware.hardwareutils.HardwareManager;
 public class MineralRecognition extends LinearOpMode {
     private HardwareManager hardware;
     private AutoCommands commands;
+    private String loggingName = "MineralRecognition";
     /**
      * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
      * localization engine.
@@ -40,7 +44,8 @@ public class MineralRecognition extends LinearOpMode {
         } else {
             telemetry.addData("Sorry!", "This device is not compatible with TFOD");
         }
-
+        //turns on flash
+        CameraDevice.getInstance().setFlashTorchMode(true);
         telemetry.addData(">", "Press Play to start tracking");
         telemetry.update();
         waitForStart();
@@ -68,12 +73,8 @@ public class MineralRecognition extends LinearOpMode {
                             for (Recognition recognition : updatedRecognitions) {
                                 if (recognition.getLabel().equals(MineralConstants.LABEL_GOLD_MINERAL)) {
                                     goldMineralCenterX = (int) (recognition.getLeft() + recognition.getRight())/2;
-                                    goldMineralX = (int) recognition.getLeft();
-                                } else if (silverMineral1X == -1) {
-                            silverMineral1X = (int) recognition.getLeft();
-                            } else {
-                            silverMineral2X = (int) recognition.getLeft();
-                            }
+
+                                }
 //                            if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
 //                              if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
 //                                telemetry.addData("Gold Mineral Position", "Left");
@@ -83,13 +84,22 @@ public class MineralRecognition extends LinearOpMode {
 //                                telemetry.addData("Gold Mineral Position", "Center");
 //                              }
 //                            }
-                        }
+                            }
+                            if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
+                                if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
+                                    telemetry.addData("Gold Mineral Position", "Left");
+                                } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
+                                    telemetry.addData("Gold Mineral Position", "Right");
+                                } else {
+                                    telemetry.addData("Gold Mineral Position", "Center");
+                                }
+                            }
                             int error = centerX - goldMineralCenterX;
                             telemetry.addData("Center", centerX);
                             telemetry.addData("Error", error);
                             telemetry.addData("Gold Mineral X", goldMineralCenterX);
                             telemetry.update();
-                            pidLoop(error);
+//                            pidLoop(error);
                         }
                     }
                 }
@@ -133,6 +143,9 @@ public class MineralRecognition extends LinearOpMode {
         double kp = 0.002;
         double sideShiftPower = error * kp;
         telemetry.addData("Power", sideShiftPower);
-        commands.HorizontalMove(sideShiftPower);
+        telemetry.update();
+        Log.i(loggingName, "Power for pid is " + sideShiftPower);
+        Log.i(loggingName, "Error for pid is " + error);
+//        commands.HorizontalMove(sideShiftPower);
     }
 }
