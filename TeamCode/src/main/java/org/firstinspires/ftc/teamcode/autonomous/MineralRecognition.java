@@ -22,6 +22,8 @@ public class MineralRecognition extends LinearOpMode {
     private HardwareManager hardware;
     private AutoCommands commands;
     private String loggingName = "MineralRecognition";
+    //TODO: replace all those -1s with an internal enum or constant
+    private final int TARGET_NOT_DETECTED = -1;
     /**
      * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
      * localization engine.
@@ -64,12 +66,12 @@ public class MineralRecognition extends LinearOpMode {
                     if (updatedRecognitions != null) {
                         telemetry.addData("# Object Detected", updatedRecognitions.size());
                         if (updatedRecognitions.size() != 0) {
-                            int goldMineralX = -1;
-                            int silverMineral1X = -1;
-                            int silverMineral2X = -1;
+                            int goldMineralX = TARGET_NOT_DETECTED;
+                            int silverMineral1X = TARGET_NOT_DETECTED;
+                            int silverMineral2X = TARGET_NOT_DETECTED;
                             Recognition imageCenterCalc = updatedRecognitions.get(0);
                             int centerX = imageCenterCalc.getImageWidth() / 2;
-                            int goldMineralCenterX = 0;
+                            int goldMineralCenterX = TARGET_NOT_DETECTED;
                             for (Recognition recognition : updatedRecognitions) {
                                 if (recognition.getLabel().equals(MineralConstants.LABEL_GOLD_MINERAL)) {
                                     goldMineralCenterX = (int) (recognition.getLeft() + recognition.getRight())/2;
@@ -85,7 +87,7 @@ public class MineralRecognition extends LinearOpMode {
 //                              }
 //                            }
                             }
-                            if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
+                            if (goldMineralX != TARGET_NOT_DETECTED && silverMineral1X != TARGET_NOT_DETECTED && silverMineral2X != TARGET_NOT_DETECTED) {
                                 if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
                                     telemetry.addData("Gold Mineral Position", "Left");
                                 } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
@@ -95,11 +97,20 @@ public class MineralRecognition extends LinearOpMode {
                                 }
                             }
                             int error = centerX - goldMineralCenterX;
-                            telemetry.addData("Center", centerX);
-                            telemetry.addData("Error", error);
-                            telemetry.addData("Gold Mineral X", goldMineralCenterX);
-                            telemetry.update();
+                            //if gold isn't detected, stop moving
+                            if(goldMineralCenterX == TARGET_NOT_DETECTED)
+                            {
+                                pidLoop(0);
+                                telemetry.addData("Gold Mineral X", "not detected");
+                            }
+                            else {
+                                telemetry.addData("Center", centerX);
+                                telemetry.addData("Error", error);
+                                telemetry.addData("Gold Mineral X", goldMineralCenterX);
+                            }
 //                            pidLoop(error);
+                            telemetry.update();
+
                         }
                     }
                 }
@@ -139,6 +150,7 @@ public class MineralRecognition extends LinearOpMode {
         tfod.loadModelFromAsset(MineralConstants.TFOD_MODEL_ASSET, MineralConstants.LABEL_GOLD_MINERAL, MineralConstants.LABEL_SILVER_MINERAL);
     }
 
+    //may need to scale this down so it stops losing track
     private void pidLoop(int error) {
         double kp = 0.002;
         double sideShiftPower = error * kp;
