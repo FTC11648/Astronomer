@@ -157,7 +157,7 @@ public class MineralRecognition extends LinearOpMode {
 
     //may need to scale this down so it stops losing track
     private void pidLoop(int error) {
-        double kp = -0.002;
+        double kp = 0.002;
         double sideShiftPower = error * kp;
         telemetry.addData("Power", sideShiftPower);
         telemetry.update();
