@@ -122,17 +122,16 @@ public class MineralRecognition extends LinearOpMode {
      * Initialize the Tensor Flow Object Detection engine.
      */
     private void initTfod() {
-        int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
-            "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(MineralConstants.TFOD_MODEL_ASSET, MineralConstants.LABEL_GOLD_MINERAL, MineralConstants.LABEL_SILVER_MINERAL);
     }
 
     private void pidLoop(int error) {
-        double kp = 0.002;
+        double kp = 0.0025;
         double sideShiftPower = error * kp;
-        telemetry.addData("Power", sideShiftPower);
-        commands.HorizontalMove(sideShiftPower);
+        telemetry.addData("Power", -sideShiftPower);
+        commands.HorizontalMove(-sideShiftPower);
     }
 }

@@ -23,12 +23,15 @@ public class AutoCommands{
     }
 
     public void HorizontalMove(double power) {
+
         telemetry.addData("Power", power);
         double leftF = 0, rightF = 0, leftB = 0, rightB = 0;
         leftF += power;
         rightF += -power;
         leftB += -power;
         rightB += power;
+
+        telemetry.addData("HorizontalMove method status", "Running");
 
         leftFrontDrive.setPower(leftF);
         leftRearDrive.setPower(leftB);
