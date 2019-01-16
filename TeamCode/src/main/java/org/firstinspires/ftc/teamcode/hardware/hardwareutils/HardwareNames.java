@@ -18,4 +18,6 @@ public class HardwareNames {
     //latching mechanism servo name
     public static final String latchingServo = "latch"; // port 0
 
+    public static final String imu = "imu";
+
 }
