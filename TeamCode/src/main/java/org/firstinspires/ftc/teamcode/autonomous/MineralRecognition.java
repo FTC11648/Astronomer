@@ -108,9 +108,9 @@ public class MineralRecognition extends LinearOpMode {
                             else {
                                 telemetry.addData("Center", centerX);
                                 Log.i(loggingName, "CenterX is " + centerX);
-                                telemetry.addData("Error + ", error);
-                                Log.i(loggingName, "Error + "  + error);
-                                Log.i(loggingName, "Gold Mineral X + "  + goldMineralCenterX);
+                                telemetry.addData("Error ", error);
+                                Log.i(loggingName, "Error "  + error);
+                                Log.i(loggingName, "Gold Mineral X "  + goldMineralCenterX);
                             }
 
                             pidLoop(error);
@@ -156,12 +156,11 @@ public class MineralRecognition extends LinearOpMode {
 
     //may need to scale this down so it stops losing track
     private void pidLoop(int error) {
-        double kp = 0.0025;
+        double kp = 0.0035;
         double sideShiftPower = error * kp;
         telemetry.addData("Power", -sideShiftPower);
         commands.HorizontalMove(-sideShiftPower);
-        telemetry.addData("Power", sideShiftPower);
-        Log.i(loggingName, "Power for pid is " + sideShiftPower);
+        Log.i(loggingName, "Power for pid is " + -sideShiftPower);
         Log.i(loggingName, "Error for pid is " + error);
         telemetry.update();
     }
