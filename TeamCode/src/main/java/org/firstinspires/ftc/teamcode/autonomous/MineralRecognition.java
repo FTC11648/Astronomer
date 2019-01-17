@@ -77,15 +77,6 @@ public class MineralRecognition extends LinearOpMode {
                                     goldMineralCenterX = (int) (recognition.getLeft() + recognition.getRight())/2;
 
                                 }
-//                            if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
-//                              if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
-//                                telemetry.addData("Gold Mineral Position", "Left");
-//                              } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
-//                                telemetry.addData("Gold Mineral Position", "Right");
-//                              } else {
-//                                telemetry.addData("Gold Mineral Position", "Center");
-//                              }
-//                            }
                             }
                             if (goldMineralX != TARGET_NOT_DETECTED && silverMineral1X != TARGET_NOT_DETECTED && silverMineral2X != TARGET_NOT_DETECTED) {
                                 if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
@@ -109,11 +100,13 @@ public class MineralRecognition extends LinearOpMode {
                                 telemetry.addData("Center", centerX);
                                 Log.i(loggingName, "CenterX is " + centerX);
                                 telemetry.addData("Error ", error);
+                                telemetry.addData("Gold Mineral X", goldMineralCenterX);
                                 Log.i(loggingName, "Error "  + error);
                                 Log.i(loggingName, "Gold Mineral X "  + goldMineralCenterX);
+                                pidLoop(error);
+
                             }
 
-                            pidLoop(error);
                             telemetry.update();
 
                         }
@@ -156,11 +149,22 @@ public class MineralRecognition extends LinearOpMode {
 
     //may need to scale this down so it stops losing track
     private void pidLoop(int error) {
-        double kp = 0.0035;
-        double sideShiftPower = error * kp;
-        telemetry.addData("Power", -sideShiftPower);
-        commands.HorizontalMove(-sideShiftPower);
-        Log.i(loggingName, "Power for pid is " + -sideShiftPower);
+        //kp .00035 no moving
+        double kp = 0.0015;
+        double sideShiftPower = -(error * kp);
+        if(sideShiftPower > 0) {
+            //puts max power at .5
+            sideShiftPower = Math.min(sideShiftPower, .5);
+        }
+        else if (sideShiftPower < 0)
+        {
+            //puts max power (abs) at -.5
+            sideShiftPower = Math.max(sideShiftPower, -.5);
+        }
+        telemetry.addData("PID Loop error", error);
+        telemetry.addData("PID Loop applied power", sideShiftPower);
+        commands.HorizontalMove(sideShiftPower);
+        Log.i(loggingName, "Power for pid is " + sideShiftPower);
         Log.i(loggingName, "Error for pid is " + error);
         telemetry.update();
     }
