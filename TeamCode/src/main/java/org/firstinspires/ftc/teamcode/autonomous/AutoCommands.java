@@ -38,4 +38,12 @@ public class AutoCommands{
         rightFrontDrive.setPower(rightF);
         rightRearDrive.setPower(rightB);
     }
+    public void driveForward(double power)
+    {
+        leftFrontDrive.setPower(power);
+        leftRearDrive.setPower(power);
+        rightFrontDrive.setPower(power);
+        rightRearDrive.setPower(power);
+
+    }
 }

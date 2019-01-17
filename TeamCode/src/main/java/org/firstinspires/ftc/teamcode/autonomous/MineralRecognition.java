@@ -29,7 +29,8 @@ public class MineralRecognition extends LinearOpMode {
      * localization engine.
      */
     private VuforiaLocalizer vuforia;
-
+    private boolean isDone = false;
+    private final long TIME_TO_MOVE_FORWARD = 0400;
     /**
      * {@link #tfod} is the variable we will use to store our instance of the Tensor Flow Object
      * Detection engine.
@@ -58,7 +59,7 @@ public class MineralRecognition extends LinearOpMode {
                 tfod.activate();
             }
 
-            while (opModeIsActive()) {
+            while (opModeIsActive() && !isDone) {
                 if (tfod != null) {
                     // getUpdatedRecognitions() will return null if no new information is available since
                     // the last time that call was made.
@@ -103,7 +104,13 @@ public class MineralRecognition extends LinearOpMode {
                                 telemetry.addData("Gold Mineral X", goldMineralCenterX);
                                 Log.i(loggingName, "Error "  + error);
                                 Log.i(loggingName, "Gold Mineral X "  + goldMineralCenterX);
-                                pidLoop(error);
+                                if(pidLoop(error))
+                                {
+                                    //move forward for 100 milliseconds
+                                    commands.driveForward(.5);
+                                    sleep(TIME_TO_MOVE_FORWARD);
+                                    isDone = true;
+                                }
 
                             }
 
@@ -148,9 +155,10 @@ public class MineralRecognition extends LinearOpMode {
     }
 
     //may need to scale this down so it stops losing track
-    private void pidLoop(int error) {
+    //returns true when done
+    private boolean pidLoop(int error) {
         //kp .00035 no moving
-        double kp = 0.0015;
+        double kp = 0.0035;
         double sideShiftPower = -(error * kp);
         if(sideShiftPower > 0) {
             //puts max power at .5
@@ -161,11 +169,17 @@ public class MineralRecognition extends LinearOpMode {
             //puts max power (abs) at -.5
             sideShiftPower = Math.max(sideShiftPower, -.5);
         }
+        if(Math.abs(sideShiftPower) < .3)
+        {
+            return true;
+
+        }
         telemetry.addData("PID Loop error", error);
         telemetry.addData("PID Loop applied power", sideShiftPower);
         commands.HorizontalMove(sideShiftPower);
         Log.i(loggingName, "Power for pid is " + sideShiftPower);
         Log.i(loggingName, "Error for pid is " + error);
         telemetry.update();
+        return false;
     }
 }
