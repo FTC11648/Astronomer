@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.hardware.IMU;
 import org.firstinspires.ftc.teamcode.hardware.LinearActuator;
 
 /**
@@ -28,12 +29,15 @@ public class  HardwareManager {
     //Latching Mechanism Servo
     public CRServo latch;
 
+    public IMU imu;
+
     public HardwareManager(HardwareMap hardwareMap)
     {
         this.hardwareMap = hardwareMap;
         initDrivetrain();
         initElevator();
         initLatchingMechanism();
+        imu = null; // hardwareMap.get(IMU.class, HardwareNames.imu);
     }
 
     private void initDrivetrain()

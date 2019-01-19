@@ -4,13 +4,13 @@ import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.vuforia.CameraDevice;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.teamcode.hardware.LinearActuator;
@@ -18,25 +18,12 @@ import org.firstinspires.ftc.teamcode.hardware.hardwareutils.HardwareManager;
 
 import java.util.List;
 
+@Autonomous(name = "DON'T RUN THIS")
 
-@Autonomous
-public class DetachAutoMineral extends LinearOpMode {
-
-
+public class MineralRecognitionTest extends LinearOpMode {
     private String loggingName = "MineralRecognition";
 
-    HardwareManager hardware;
 
-    // drive train motors
-
-    // Elevator Linear Actuators
-    LinearActuator leftActuator;
-    LinearActuator rightActuator;
-
-    CRServo latch;
-
-    // vision
-    private AutoCommands commands;
     private final int TARGET_NOT_DETECTED = -1;
     /**
      * {@link #vuforia} is the variable we will use to store our instance of the
@@ -44,7 +31,7 @@ public class DetachAutoMineral extends LinearOpMode {
      */
     private VuforiaLocalizer vuforia;
     private boolean isDone = false;
-    private final long TIME_TO_MOVE_FORWARD = 0400;
+    private final long TIME_TO_MOVE_FORWARD =         10000;
     /**
      * {@link #tfod} is the variable we will use to store our instance of the Tensor
      * Flow Object Detection engine.
@@ -54,14 +41,7 @@ public class DetachAutoMineral extends LinearOpMode {
     @Override
     public void runOpMode() {
         initVuforia();
-        hardware = new HardwareManager(hardwareMap);
 
-        leftActuator = hardware.leftActuator;
-        rightActuator = hardware.rightActuator;
-
-        latch = hardware.latch;
-
-        commands = new AutoCommands(hardware, telemetry);
         if (ClassFactory.getInstance().canCreateTFObjectDetector()) {
             initTfod();
         } else {
@@ -80,16 +60,9 @@ public class DetachAutoMineral extends LinearOpMode {
                 tfod.activate();
             }
         }
-        // extend elevator to full. Assumes positive voltage extends the elevator
-//        leftActuator.setVolt(1);
-//        rightActuator.setVolt(1);
-//        sleep(AutoConstants.MILLISECONDS_TILL_FULL_ELEVATOR_EXTENSION);
-//
-//        latch.setPower(-1);
-//        sleep(AutoConstants.MILLISECONDS_TO_DETACH_LATCH);
-//        latch.setPower(0);
-        sleep(AutoConstants.MILLISECONDS_TO_WAIT);
         alignAndHitMineral();
+        telemetry.addData("Aligned", "alignment complete");
+        sleep(10000);
     }
 
     /**
@@ -103,7 +76,7 @@ public class DetachAutoMineral extends LinearOpMode {
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         parameters.vuforiaLicenseKey = MineralConstants.VUFORIA_KEY;
-        parameters.cameraDirection = CameraDirection.BACK;
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
 
         // Instantiate the Vuforia engine
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
@@ -163,10 +136,10 @@ public class DetachAutoMineral extends LinearOpMode {
                             Log.i(loggingName, "Error " + error);
                             Log.i(loggingName, "Gold Mineral X " + goldMineralCenterX);
                             if (pidLoop(error)) {
-                                telemetry.addData("Drive state", "moving forward");
                                 // move forward for 100 milliseconds
-//                                commands.driveForward(.5);
-//                                sleep(TIME_TO_MOVE_FORWARD);
+                                telemetry.addData("Drive state", "driving forward");
+                                telemetry.update();
+                                sleep(TIME_TO_MOVE_FORWARD);
                                 isDone = true;
                             }
 
@@ -203,10 +176,10 @@ public class DetachAutoMineral extends LinearOpMode {
         double sideShiftPower = (error * kp);
         if (sideShiftPower > 0) {
             // puts max power at .5
-            sideShiftPower = Math.min(sideShiftPower, .4);
+            sideShiftPower = Math.min(sideShiftPower, .5);
         } else if (sideShiftPower < 0) {
             // puts max power (abs) at -.5
-            sideShiftPower = Math.max(sideShiftPower, -.4);
+            sideShiftPower = Math.max(sideShiftPower, -.5);
         }
         if (Math.abs(sideShiftPower) < .3) {
             return true;
@@ -214,7 +187,7 @@ public class DetachAutoMineral extends LinearOpMode {
         }
         telemetry.addData("PID Loop error", error);
         telemetry.addData("PID Loop applied power", sideShiftPower);
-        commands.HorizontalMove(sideShiftPower);
+//        commands.HorizontalMove(sideShiftPower);
         Log.i(loggingName, "Power for pid is " + sideShiftPower);
         Log.i(loggingName, "Error for pid is " + error);
         telemetry.update();

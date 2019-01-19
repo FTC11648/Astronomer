@@ -18,7 +18,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.teamcode.hardware.hardwareutils.HardwareManager;
 
 @Autonomous
- @Disabled
+// @Disabled
 public class MineralRecognition extends LinearOpMode {
     private HardwareManager hardware;
     private AutoCommands commands;
@@ -108,7 +108,7 @@ public class MineralRecognition extends LinearOpMode {
                                 if(pidLoop(error))
                                 {
                                     //move forward for 100 milliseconds
-                                    commands.driveForward(.5);
+                                    commands.driveForward(-.5);
                                     sleep(TIME_TO_MOVE_FORWARD);
                                     isDone = true;
                                 }
@@ -160,7 +160,7 @@ public class MineralRecognition extends LinearOpMode {
     private boolean pidLoop(int error) {
         //kp .00035 no moving
         double kp = 0.0035;
-        double sideShiftPower = -(error * kp);
+        double sideShiftPower = (error * kp);
         if(sideShiftPower > 0) {
             //puts max power at .5
             sideShiftPower = Math.min(sideShiftPower, .5);
