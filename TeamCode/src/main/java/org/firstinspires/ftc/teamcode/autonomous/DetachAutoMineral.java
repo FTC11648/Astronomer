@@ -97,7 +97,6 @@ public class DetachAutoMineral extends LinearOpMode {
         sleep(AutoConstants.MILLISECONDS_TO_DETACH_LATCH);
         latch.setPower(0);
         sleep(AutoConstants.MILLISECONDS_TO_WAIT);
-        // drive forwards for predefined time in milliseconds
         alignAndHitMineral();
     }
 
