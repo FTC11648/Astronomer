@@ -45,7 +45,9 @@ public class DetachAutoAndMoveBackwards extends LinearOpMode {
         while (!opModeIsActive() && !isStopRequested()) {
             telemetry.addData("status", "waiting for start command...");
             telemetry.update();
-        }        //extend elevator to full. Assumes positive voltage extends the elevator
+        }
+        waitForStart();
+        //extend elevator to full. Assumes positive voltage extends the elevator
         leftActuator.setVolt(1);
         rightActuator.setVolt(1);
         sleep(AutoConstants.MILLISECONDS_TILL_FULL_ELEVATOR_EXTENSION);

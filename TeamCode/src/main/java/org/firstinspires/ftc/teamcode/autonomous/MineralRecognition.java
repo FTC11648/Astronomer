@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode.autonomous;
 import android.util.Log;
 import android.widget.HorizontalScrollView;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.vuforia.CameraDevice;
@@ -17,7 +18,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.teamcode.hardware.hardwareutils.HardwareManager;
 
 @Autonomous
-// @Disabled
+ @Disabled
 public class MineralRecognition extends LinearOpMode {
     private HardwareManager hardware;
     private AutoCommands commands;
