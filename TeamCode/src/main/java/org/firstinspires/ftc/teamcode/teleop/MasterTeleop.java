@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.hardware.controls.GamepadWrapper;
 import org.firstinspires.ftc.teamcode.hardware.hardwareutils.HardwareManager;
@@ -15,8 +16,8 @@ import org.firstinspires.ftc.teamcode.subsystems.subsystemutils.SubsystemManager
 public class MasterTeleop extends OpMode {
     HardwareManager hardware;
 
-    GamepadWrapper driveController; //gamepad 1;
-    GamepadWrapper manipController; //gamepad 2;
+    Gamepad driveController; //gamepad 1;
+    Gamepad manipController; //gamepad 2;
 
     SubsystemManager subsystems;
     @Override
@@ -31,8 +32,8 @@ public class MasterTeleop extends OpMode {
         //for drive controller, do Start btn + A btn
         //for manip controller, do Start btn + B btn
         hardware = new HardwareManager(hardwareMap);
-        driveController = new GamepadWrapper(gamepad1);
-        manipController = new GamepadWrapper(gamepad2);
+        driveController = new Gamepad();
+        manipController = new Gamepad();
 
 
         Subsystem drive = setUpDriveTrain();
