@@ -37,9 +37,9 @@ public class MasterTeleop extends OpMode {
 
 
         Subsystem drive = setUpDriveTrain();
-        Subsystem latch = setUpLatch();
-        Subsystem elevator = setUpElevator();
-        subsystems = new SubsystemManager(drive, latch, elevator);
+
+
+        subsystems = new SubsystemManager(drive);
     }
     @Override
     public void loop() {
@@ -47,13 +47,9 @@ public class MasterTeleop extends OpMode {
 
     }
 
-    private Subsystem setUpElevator() {
-      return new Elevator(manipController, hardware.leftActuator, hardware.rightActuator);
-    }
-    private Subsystem setUpLatch()
-    {
-        return new Latch(manipController, hardware.latch);
-    }
+
+
+
     private Subsystem setUpDriveTrain()
     {
         return new TwinstickMecanum(driveController, hardware.leftFrontDrive, hardware.rightFrontDrive, hardware.leftRearDrive, hardware.rightRearDrive);
