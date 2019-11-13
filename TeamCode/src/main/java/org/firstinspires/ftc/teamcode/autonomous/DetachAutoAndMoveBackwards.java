@@ -38,8 +38,7 @@ public class DetachAutoAndMoveBackwards extends LinearOpMode {
         rightFrontDrive = hardware.rightFrontDrive;
         rightRearDrive = hardware.rightRearDrive;
 
-        leftActuator = hardware.leftActuator;
-        rightActuator = hardware.rightActuator;
+
 
         latch = hardware.latch;
         while (!opModeIsActive() && !isStopRequested()) {

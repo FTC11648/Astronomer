@@ -21,10 +21,11 @@ public class  HardwareManager {
     public DcMotor rightFrontDrive;
     public DcMotor leftRearDrive;
     public DcMotor rightRearDrive;
+    public DcMotor motorzero;
+    public DcMotor motorone;
 
-    //Elevator Linear Actuators
-    public LinearActuator leftActuator;
-    public LinearActuator rightActuator;
+
+
 
     //Latching Mechanism Servo
     public CRServo latch;
@@ -35,30 +36,19 @@ public class  HardwareManager {
     {
         this.hardwareMap = hardwareMap;
         initDrivetrain();
-        initElevator();
-        initLatchingMechanism();
+        //initLatchingMechanism();
         imu = null; // hardwareMap.get(IMU.class, HardwareNames.imu);
     }
 
     private void initDrivetrain()
     {
-        leftFrontDrive = hardwareMap.get(DcMotor.class, HardwareNames.leftFrontDriveMotor);
-        leftRearDrive = hardwareMap.get(DcMotor.class, HardwareNames.leftRearDriveMotor);
-
-
-        rightFrontDrive = hardwareMap.get(DcMotor.class, HardwareNames.rightFrontDriveMotor);
-        rightFrontDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightRearDrive = hardwareMap.get(DcMotor.class, HardwareNames.rightRearDriveMotor);
-        rightRearDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorone = hardwareMap.get(DcMotor.class, HardwareNames.motorone);
+        motorzero = hardwareMap.get(DcMotor.class, HardwareNames.motorzero);
     }
 
-    private void initElevator()
-    {
-        double leftActuatorScaleFactor = .97;
-        leftActuator = new LinearActuator(hardwareMap.get(DcMotor.class, HardwareNames.leftElevatorActuator), true);
-        leftActuator.scale(leftActuatorScaleFactor);
-        rightActuator = new LinearActuator(hardwareMap.get(DcMotor.class, HardwareNames.rightElevatorActuator), true);
-    }
+
+
+
     private void initLatchingMechanism()
     {
         latch = hardwareMap.get(CRServo.class, HardwareNames.latchingServo);

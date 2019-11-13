@@ -56,8 +56,7 @@ public class DetachAutoMineral extends LinearOpMode {
         initVuforia();
         hardware = new HardwareManager(hardwareMap);
 
-        leftActuator = hardware.leftActuator;
-        rightActuator = hardware.rightActuator;
+
 
         latch = hardware.latch;
 
