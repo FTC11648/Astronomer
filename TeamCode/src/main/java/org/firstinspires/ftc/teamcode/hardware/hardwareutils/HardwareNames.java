@@ -6,8 +6,8 @@ package org.firstinspires.ftc.teamcode.hardware.hardwareutils;
 public class HardwareNames {
 
     //drive train motor names
-    public static final String motorone = "motorone"; //
-    public static final String motorzero = "motorzero";
+    public static final String leftMotor = "leftMotor"; //
+    public static final String rightMotor = "rightMotor";
     public static final String rightFrontDriveMotor = "rightFrontDrive";
     public static final String rightRearDriveMotor = "rightRearDrive";
 
@@ -19,5 +19,5 @@ public class HardwareNames {
     public static final String latchingServo = "latch"; // port 0
 
     public static final String imu = "imu";
-
+    public static final String colorSensor = "colorSensor";
 }

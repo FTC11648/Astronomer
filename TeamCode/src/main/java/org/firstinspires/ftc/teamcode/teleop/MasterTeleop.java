@@ -5,10 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.hardware.hardwareutils.HardwareManager;
-import org.firstinspires.ftc.teamcode.subsystems.Latch;
 import org.firstinspires.ftc.teamcode.subsystems.TwinstickMecanum;
 import org.firstinspires.ftc.teamcode.subsystems.subsystemutils.Subsystem;
-import org.firstinspires.ftc.teamcode.subsystems.Elevator;
 import org.firstinspires.ftc.teamcode.subsystems.subsystemutils.SubsystemManager;
 
 @TeleOp
@@ -48,6 +46,6 @@ public class MasterTeleop extends OpMode {
 
     private Subsystem setUpDriveTrain()
     {
-        return new TwinstickMecanum(driveController, hardware.leftFrontDrive, hardware.rightFrontDrive, hardware.leftRearDrive, hardware.rightRearDrive);
+        return new TwinstickMecanum(driveController, hardware.leftFrontDrive, hardware.rightFrontDrive);
     }
 }

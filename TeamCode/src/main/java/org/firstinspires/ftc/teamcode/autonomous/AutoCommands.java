@@ -19,9 +19,7 @@ public class AutoCommands{
         this.telemetry = telemetry;
         this.hardware = hardware;
         leftFrontDrive = hardware.leftFrontDrive;
-        leftRearDrive = hardware.leftRearDrive;
         rightFrontDrive = hardware.rightFrontDrive;
-        rightRearDrive = hardware.rightRearDrive;
         imu = hardware.imu;
     }
 
