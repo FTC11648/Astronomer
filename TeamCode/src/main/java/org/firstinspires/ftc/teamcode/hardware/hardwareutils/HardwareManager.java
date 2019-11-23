@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.I2cAddr;
+import com.qualcomm.robotcore.hardware.Servo;
 
 /**
  * Contains all pieces of Hardware used on Robot. Only declare & initialize Hardware here.
@@ -18,32 +20,30 @@ public class  HardwareManager {
     public DcMotor rightFrontDrive;
     public DcMotor rightRearDrive;
     public DcMotor leftRearDrive;
-    public ColorSensor colorsenser;
+    public ColorSensor colorSensor;
+
+    public DcMotor rightIntakeMotor;
+    public DcMotor leftIntakeMotor;
 
     // Elevator motors
-    public DcMotor elevatorLift;
-    public DcMotor elevatorExtend;
+    public DcMotor elevatorMotor;
 
     // Block Grabber
     public CRServo blockPanServo;
-    public CRServo blockTiltServo;
 
     // Latching Mechanism Servo
     public CRServo latch;
 
-    // Boot Mechanism Servo
-    public CRServo boot;
+    // Intake Mechanism Servo
+    public Servo boot;
 
     public HardwareManager(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
         initDriveTrain();
         initBlockControlMechanism();
         initElevator();
-        initBoot();
-    }
-
-    private void initBoot() {
-        boot = hardwareMap.get(CRServo.class, HardwareNames.bootServo);
+        initColorSensor();
+        initIntake();
     }
 
     private void initDriveTrain() {
@@ -58,14 +58,22 @@ public class  HardwareManager {
     }
 
     private void initElevator() {
-        elevatorLift = hardwareMap.get(DcMotor.class, HardwareNames.armLifter);
-        elevatorExtend = hardwareMap.get(DcMotor.class, HardwareNames.armExtender);
+        elevatorMotor = hardwareMap.get(DcMotor.class, HardwareNames.elevatorMotor);
     }
 
-    private void initBlockControlMechanism()
-    {
+    private void initBlockControlMechanism() {
         blockPanServo = hardwareMap.get(CRServo.class, HardwareNames.blockPanServo);
-        blockTiltServo = hardwareMap.get(CRServo.class, HardwareNames.blockTiltServo);
         latch = hardwareMap.get(CRServo.class, HardwareNames.latchingServo);
+    }
+
+    private void initColorSensor() {
+        colorSensor = hardwareMap.get(ColorSensor.class, HardwareNames.colorSensor);
+        colorSensor.setI2cAddress(new I2cAddr(0x52));
+    }
+
+    private void initIntake() {
+        rightIntakeMotor = hardwareMap.get(DcMotor.class, HardwareNames.rightIntakeMotor);
+        leftIntakeMotor = hardwareMap.get(DcMotor.class, HardwareNames.leftIntakeMotor);
+        boot = hardwareMap.get(Servo.class, HardwareNames.bootServo);
     }
 }

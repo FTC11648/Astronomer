@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.hardware.hardwareutils.HardwareManager;
 import org.firstinspires.ftc.teamcode.subsystems.Elevator;
+import org.firstinspires.ftc.teamcode.subsystems.Grabber;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.TwinstickMecanum;
 import org.firstinspires.ftc.teamcode.subsystems.subsystemutils.Subsystem;
 import org.firstinspires.ftc.teamcode.subsystems.subsystemutils.SubsystemManager;
@@ -20,29 +22,27 @@ public class MasterTeleop extends OpMode {
     SubsystemManager subsystems;
 
     @Override
-    public void init_loop() {
-        // If you are using Motorola E4 phones,
-        // you should send telemetry data while waiting for start.
-        telemetry.addData("status", "loop test... waiting for start");
-    }
-
-    @Override
     public void init() {
         //verify switch on bottom is in X pos
         //for drive controller, do Start btn + A btn
         //for manip controller, do Start btn + B btn
         hardware = new HardwareManager(hardwareMap);
-        driveController = new Gamepad();
-        manipController = new Gamepad();
+        driveController = gamepad1;
+        manipController = gamepad2;
 
         Subsystem drive = setUpDriveTrain();
         Subsystem elevator = setUpElevator();
+        Subsystem grabber = setupGrabber();
+        Subsystem intake = setupIntake();
 
-        subsystems = new SubsystemManager(drive, elevator);
+        subsystems = new SubsystemManager(drive, elevator, grabber, intake);
+
     }
 
     @Override
     public void loop() {
+        telemetry.addData("status", "loop");
+        telemetry.update();
         subsystems.update();
     }
 
@@ -59,8 +59,24 @@ public class MasterTeleop extends OpMode {
     private Subsystem setUpElevator() {
         return new Elevator(
                 manipController,
-                hardware.elevatorLift,
-                hardware.elevatorExtend
+                hardware.elevatorMotor
+        );
+    }
+
+    private Subsystem setupIntake() {
+        return new Intake(
+                driveController,
+                hardware.boot,
+                hardware.leftIntakeMotor,
+                hardware.rightIntakeMotor
+        );
+    }
+
+    private Subsystem setupGrabber() {
+        return new Grabber(
+                manipController,
+                hardware.latch,
+                hardware.blockPanServo
         );
     }
 }

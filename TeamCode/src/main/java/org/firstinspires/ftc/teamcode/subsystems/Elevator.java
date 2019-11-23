@@ -10,13 +10,11 @@ import org.firstinspires.ftc.teamcode.subsystems.subsystemutils.Subsystem;
  */
 public class Elevator implements Subsystem {
     private DcMotor lift;
-    private DcMotor extend;
     private Gamepad manipController;
 
-    public Elevator(Gamepad manipController,  DcMotor lift, DcMotor extend) {
+    public Elevator(Gamepad manipController,  DcMotor lift) {
         this.manipController = manipController;
         this.lift = lift;
-        this.extend = extend;
     }
 
     @Override
@@ -30,17 +28,12 @@ public class Elevator implements Subsystem {
         double leftStickY = manipController.left_stick_y;
         if(leftStickY > 0) {
             lift.setPower(1);
-            extend.setPower(1);
         }
-        else if (leftStickY < 0)
-        {
+        else if (leftStickY < 0) {
             lift.setPower(-1);
-            extend.setPower(-1);
         }
-        else
-        {
+        else {
             lift.setPower(0);
-            extend.setPower(0);
         }
     }
 }

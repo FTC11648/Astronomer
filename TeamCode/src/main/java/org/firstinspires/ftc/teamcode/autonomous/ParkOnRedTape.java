@@ -16,10 +16,9 @@ public HardwareManager hardware;
         hardware = new HardwareManager (hardwareMap);
         DcMotor rightMotor = hardware.rightFrontDrive;
         DcMotor leftMotor = hardware.leftFrontDrive;
-        ColorSensor colorSensor = hardware.colorsenser;
-        colorSensor.setI2cAddress(new I2cAddr(0x39));
+        ColorSensor colorSensor = hardware.colorSensor;
         while(!opModeIsActive()&&!isStopRequested()){
-            telemetry.addData("status", "waiting for start comand");
+            telemetry.addData("status", "waiting for start command");
             telemetry.update();
         }
         waitForStart();
