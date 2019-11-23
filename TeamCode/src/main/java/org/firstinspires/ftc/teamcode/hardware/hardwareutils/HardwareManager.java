@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.hardware.hardwareutils;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
@@ -15,6 +16,8 @@ public class  HardwareManager {
     // Drive train Motors
     public DcMotor leftFrontDrive;
     public DcMotor rightFrontDrive;
+    public DcMotor rightRearDrive;
+    public DcMotor leftRearDrive;
     public ColorSensor colorsenser;
 
     // Elevator motors
@@ -45,10 +48,10 @@ public class  HardwareManager {
 
     private void initDriveTrain() {
         // Set the motors
-        leftFrontDrive = hardwareMap.get(DcMotor.class, HardwareNames.leftFrontDriveMotor);
-        leftRearDrive = hardwareMap.get(DcMotor.class, HardwareNames.leftRearDriveMotor);
-        rightFrontDrive = hardwareMap.get(DcMotor.class, HardwareNames.rightFrontDriveMotor);
-        rightRearDrive = hardwareMap.get(DcMotor.class, HardwareNames.rightRearDriveMotor);
+        leftFrontDrive = hardwareMap.get(DcMotor.class, HardwareNames.leftFrontDrive);
+        leftRearDrive = hardwareMap.get(DcMotor.class, HardwareNames.leftRearDrive);
+        rightFrontDrive = hardwareMap.get(DcMotor.class, HardwareNames.rightFrontDrive);
+        rightRearDrive = hardwareMap.get(DcMotor.class, HardwareNames.rightRearDrive);
         // Reverse right motors
         rightFrontDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightRearDrive.setDirection(DcMotorSimple.Direction.REVERSE);

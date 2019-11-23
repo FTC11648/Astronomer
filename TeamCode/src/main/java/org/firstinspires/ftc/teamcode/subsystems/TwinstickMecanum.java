@@ -43,12 +43,17 @@ public class TwinstickMecanum implements Subsystem {
         rightBMotor.setPower(rightB);
     }
 
-    public TwinstickMecanum(Gamepad driveController, DcMotor leftFMotor, DcMotor rightFMotor) {
+    public TwinstickMecanum(Gamepad driveController,
+                            DcMotor leftFrontDrive,
+                            DcMotor rightFrontDrive,
+                            DcMotor leftRearDrive,
+                            DcMotor rightRearDrive) {
+
         this.driveController = driveController;
-        this.leftFMotor = leftFMotor;
-        this.rightFMotor = rightFMotor;
-        this.rightBMotor = rightBMotor;
-        this.leftBMotor = leftBMotor;
+        this.leftFMotor = leftFrontDrive;
+        this.rightFMotor = rightFrontDrive;
+        this.rightBMotor = rightRearDrive;
+        this.leftBMotor = leftRearDrive;
     }
 
     @Override

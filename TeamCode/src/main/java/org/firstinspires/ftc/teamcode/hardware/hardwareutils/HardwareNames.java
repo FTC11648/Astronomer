@@ -6,10 +6,10 @@ package org.firstinspires.ftc.teamcode.hardware.hardwareutils;
 public class HardwareNames {
 
     //drive train motor names
-    public static final String leftMotor = "leftMotor"; //
-    public static final String rightMotor = "rightMotor";
-    public static final String rightFrontDriveMotor = "rightFrontDrive";
-    public static final String rightRearDriveMotor = "rightRearDrive";
+    public static final String leftRearDrive= "leftFrontDrive"; //
+    public static final String leftFrontDrive = "leftRearDrive";
+    public static final String rightFrontDrive = "rightFrontDrive";
+    public static final String rightRearDrive = "rightRearDrive";
 
     public static final String blockPanServo = "blockpositioner";
     public static final String blockTiltServo = "orienter";
