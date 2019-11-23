@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.hardware.hardwareutils;
 
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
@@ -15,8 +15,7 @@ public class  HardwareManager {
     // Drive train Motors
     public DcMotor leftFrontDrive;
     public DcMotor rightFrontDrive;
-    public DcMotor leftRearDrive;
-    public DcMotor rightRearDrive;
+    public ColorSensor colorsenser;
 
     // Elevator motors
     public DcMotor elevatorLift;
