@@ -34,10 +34,8 @@ public class Grabber implements Subsystem {
             latch.setPower(0);
         }
 
-        if (manipController.left_stick_y > .2 ) {
-            rotate.setPower(0.7);
-        } else if (manipController.left_stick_y < -.2) {
-            rotate.setPower(0.3);
+        if (manipController.left_stick_y > .2 || manipController.left_stick_y < -.2) {
+            rotate.setPower(manipController.left_stick_y);
         } else {
             rotate.setPower(0);
         }
