@@ -13,8 +13,6 @@ class Intake(controller : Gamepad, bootServo : Servo, leftIntake : DcMotor, righ
     private val leftIntake : DcMotor = leftIntake
     private val rightIntake : DcMotor = rightIntake
 
-    private var intakeOn = false
-
     override fun init() {
         boot.position = 0.0
         leftIntake.power = 0.5
@@ -26,12 +24,19 @@ class Intake(controller : Gamepad, bootServo : Servo, leftIntake : DcMotor, righ
     }
 
     override fun update() {
-        if (controller.right_bumper) {
-            intakeOn = true
-        }
-
-        if (controller.left_bumper) {
-            intakeOn = false
+        when {
+            controller.right_bumper -> {
+                leftIntake.power = -.25
+                rightIntake.power = .25
+            }
+            controller.left_bumper -> {
+                leftIntake.power = 1.0
+                rightIntake.power = -1.0
+            }
+            else -> {
+                rightIntake.power = 0.0
+                leftIntake.power = 0.0
+            }
         }
 
         if (controller.y) {
@@ -41,8 +46,5 @@ class Intake(controller : Gamepad, bootServo : Servo, leftIntake : DcMotor, righ
         if (controller.a) {
             boot.position = 0.0
         }
-
-        leftIntake.power = if (intakeOn) -0.25 else 0.0
-        rightIntake.power = if (intakeOn) 0.25 else 0.0
     }
 }
