@@ -4,10 +4,6 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.teamcode.hardware.IMU;
-import org.firstinspires.ftc.teamcode.hardware.LinearActuator;
 
 /**
  * Contains all pieces of Hardware used on Robot. Only declare & initialize Hardware here.
@@ -16,44 +12,58 @@ public class  HardwareManager {
 
     HardwareMap hardwareMap;
 
-    //Drivetrain Motors
+    // Drive train Motors
     public DcMotor leftFrontDrive;
     public DcMotor rightFrontDrive;
     public DcMotor leftRearDrive;
     public DcMotor rightRearDrive;
 
+    // Elevator motors
+    public DcMotor elevatorLift;
+    public DcMotor elevatorExtend;
 
+    // Block Grabber
+    public CRServo blockPanServo;
+    public CRServo blockTiltServo;
 
-    //Latching Mechanism Servo
+    // Latching Mechanism Servo
     public CRServo latch;
 
-    public IMU imu;
+    // Boot Mechanism Servo
+    public CRServo boot;
 
-    public HardwareManager(HardwareMap hardwareMap)
-    {
+    public HardwareManager(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
-        initDrivetrain();
-        initLatchingMechanism();
-        imu = null; // hardwareMap.get(IMU.class, HardwareNames.imu);
+        initDriveTrain();
+        initBlockControlMechanism();
+        initElevator();
+        initBoot();
     }
 
-    private void initDrivetrain()
-    {
+    private void initBoot() {
+        boot = hardwareMap.get(CRServo.class, HardwareNames.bootServo);
+    }
+
+    private void initDriveTrain() {
+        // Set the motors
         leftFrontDrive = hardwareMap.get(DcMotor.class, HardwareNames.leftFrontDriveMotor);
         leftRearDrive = hardwareMap.get(DcMotor.class, HardwareNames.leftRearDriveMotor);
-
-
         rightFrontDrive = hardwareMap.get(DcMotor.class, HardwareNames.rightFrontDriveMotor);
-        rightFrontDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightRearDrive = hardwareMap.get(DcMotor.class, HardwareNames.rightRearDriveMotor);
+        // Reverse right motors
+        rightFrontDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightRearDrive.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
+    private void initElevator() {
+        elevatorLift = hardwareMap.get(DcMotor.class, HardwareNames.armLifter);
+        elevatorExtend = hardwareMap.get(DcMotor.class, HardwareNames.armExtender);
+    }
 
-
-
-    private void initLatchingMechanism()
+    private void initBlockControlMechanism()
     {
+        blockPanServo = hardwareMap.get(CRServo.class, HardwareNames.blockPanServo);
+        blockTiltServo = hardwareMap.get(CRServo.class, HardwareNames.blockTiltServo);
         latch = hardwareMap.get(CRServo.class, HardwareNames.latchingServo);
     }
 }

@@ -11,13 +11,16 @@ public class HardwareNames {
     public static final String rightFrontDriveMotor = "rightFrontDrive";
     public static final String rightRearDriveMotor = "rightRearDrive";
 
-    //elevator motor names
-    public static final String leftElevatorActuator = "leftElevator"; // Hub 1 port 1
-    public static final String rightElevatorActuator = "rightElevator"; // Hub 1 Port 0
+    public static final String blockPanServo = "blockpositioner";
+    public static final String blockTiltServo = "orienter";
+
+    public static final String bootServo = "boot";
+
+    //arm motor names
+    public static final String armLifter = "armmotor"; // Hub 1 port 1
+    public static final String armExtender = "pulleymotor"; // Hub 1 Port 0
 
     //latching mechanism servo name
-    public static final String latchingServo = "latch"; // port 0
-
-    public static final String imu = "imu";
+    public static final String latchingServo = "grabber"; // port 0
 
 }

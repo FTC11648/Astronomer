@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.hardware.IMU;
 import org.firstinspires.ftc.teamcode.hardware.hardwareutils.HardwareManager;
 
 public class AutoCommands{
@@ -12,7 +11,6 @@ public class AutoCommands{
     private DcMotor leftRearDrive;
     private DcMotor rightFrontDrive;
     private DcMotor rightRearDrive;
-    private IMU imu;
     Telemetry telemetry;
 
     public AutoCommands(HardwareManager hardware, Telemetry telemetry) {
@@ -22,7 +20,6 @@ public class AutoCommands{
         leftRearDrive = hardware.leftRearDrive;
         rightFrontDrive = hardware.rightFrontDrive;
         rightRearDrive = hardware.rightRearDrive;
-        imu = hardware.imu;
     }
 
     public void HorizontalMove(double power) {
@@ -41,13 +38,13 @@ public class AutoCommands{
         rightFrontDrive.setPower(rightF);
         rightRearDrive.setPower(rightB);
     }
+
     public void driveForward(double power)
     {
         leftFrontDrive.setPower(power);
         leftRearDrive.setPower(power);
         rightFrontDrive.setPower(power);
         rightRearDrive.setPower(power);
-
     }
 
     /**
@@ -74,11 +71,12 @@ public class AutoCommands{
         }
         return correctCount;
     }
+
     private void turn(double power)
     {
-        double leftF =power;
+        double leftF  = power;
         double rightF = -power;
-        double leftB = power;
+        double leftB  = power;
         double rightB = -power;
         leftFrontDrive.setPower(leftF);
         rightFrontDrive.setPower(rightF);
