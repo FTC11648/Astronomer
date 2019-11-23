@@ -27,9 +27,9 @@ public class Grabber implements Subsystem {
     @Override
     public void update() {
         if (manipController.a) {
-            latch.setPower(0);
+            latch.setPower(-.75);
         } else if (manipController.b) {
-            latch.setPower(0);
+            latch.setPower(0.75);
         } else {
             latch.setPower(0);
         }

@@ -64,7 +64,6 @@ public class  HardwareManager {
 
     private void initColorSensor() {
         colorSensor = hardwareMap.get(ColorSensor.class, HardwareNames.colorSensor);
-        colorSensor.setI2cAddress(new I2cAddr(0x52));
     }
 
     private void initIntake() {
