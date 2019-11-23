@@ -40,8 +40,7 @@ public class  HardwareManager {
     public HardwareManager(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
         initDriveTrain();
-        initBlockControlMechanism();
-        initElevator();
+        initGrabber();
         initColorSensor();
         initIntake();
     }
@@ -57,13 +56,10 @@ public class  HardwareManager {
         rightRearDrive.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
-    private void initElevator() {
+    private void initGrabber() {
         elevatorMotor = hardwareMap.get(DcMotor.class, HardwareNames.elevatorMotor);
-    }
-
-    private void initBlockControlMechanism() {
-        blockPanServo = hardwareMap.get(CRServo.class, HardwareNames.blockPanServo);
         latch = hardwareMap.get(CRServo.class, HardwareNames.latchingServo);
+        blockPanServo = hardwareMap.get(CRServo.class, HardwareNames.blockPanServo);
     }
 
     private void initColorSensor() {

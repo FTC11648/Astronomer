@@ -36,6 +36,7 @@ public class MasterTeleop extends OpMode {
         Subsystem intake = setupIntake();
 
         subsystems = new SubsystemManager(drive, elevator, grabber, intake);
+        subsystems.init();
 
     }
 

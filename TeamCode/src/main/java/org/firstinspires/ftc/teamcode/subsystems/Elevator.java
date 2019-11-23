@@ -25,11 +25,11 @@ public class Elevator implements Subsystem {
 
     @Override
     public void update() {
-        double leftStickY = manipController.left_stick_y;
-        if(leftStickY > 0) {
+        double rightStickY = manipController.right_stick_y;
+        if(rightStickY > 0) {
             lift.setPower(1);
         }
-        else if (leftStickY < 0) {
+        else if (rightStickY < 0) {
             lift.setPower(-1);
         }
         else {

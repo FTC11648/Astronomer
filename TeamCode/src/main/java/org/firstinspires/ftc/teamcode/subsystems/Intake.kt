@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems
 
+import android.os.SystemClock.sleep
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.Gamepad
 import com.qualcomm.robotcore.hardware.Servo
@@ -15,7 +16,13 @@ class Intake(controller : Gamepad, bootServo : Servo, leftIntake : DcMotor, righ
     private var intakeOn = false
 
     override fun init() {
-        // Not used
+        boot.position = 0.0
+        leftIntake.power = 0.5
+        rightIntake.power = 0.5
+        sleep(500)
+        leftIntake.power = 0.0
+        rightIntake.power = 0.0
+
     }
 
     override fun update() {
@@ -28,14 +35,14 @@ class Intake(controller : Gamepad, bootServo : Servo, leftIntake : DcMotor, righ
         }
 
         if (controller.y) {
-            boot.position = 140.0
+            boot.position = 180.0
         }
 
         if (controller.a) {
             boot.position = 0.0
         }
 
-        leftIntake.power = if (intakeOn) 1.0 else 0.0
-        rightIntake.power = if (intakeOn) 1.0 else 0.0
+        leftIntake.power = if (intakeOn) -0.25 else 0.0
+        rightIntake.power = if (intakeOn) 0.25 else 0.0
     }
 }
